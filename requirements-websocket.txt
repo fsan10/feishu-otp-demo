@@ -1,0 +1,2 @@
+# Official Feishu SDK. Verified against the published package on 2026-10-04.
+lark-oapi==1.7.3

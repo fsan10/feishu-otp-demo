@@ -1,0 +1,2 @@
+# Offline demo and polling mode need only Python 3.12 standard library.
+# WebSocket mode: install requirements-websocket.txt separately.

@@ -1,0 +1,20 @@
+{
+  "chat_id": "oc_REPLACE_WITH_SMS_GROUP_ID",
+  "poll_interval_seconds": 3,
+  "trusted_senders": [
+    {"id_type": "app_id", "id": "REPLACE_WITH_HISTORY_SENDER_ID"},
+    {"id_type": "open_id", "id": "REPLACE_WITH_EVENT_SENDER_OPEN_ID"}
+  ],
+  "routes": {
+    "test_sms": {
+      "required_keywords": ["OTP_BRIDGE_TEST", "demo-account-8888"],
+      "max_age_seconds": 120,
+      "timeout_seconds": 120
+    },
+    "douyin_shop_b": {
+      "required_keywords": ["抖音", "旗舰店 B", "138****8888", "报表导出"],
+      "max_age_seconds": 120,
+      "timeout_seconds": 120
+    }
+  }
+}
