@@ -4,3 +4,4 @@ __pycache__/
 config.json
 .env
 *.log
+.codex-remote-attachments

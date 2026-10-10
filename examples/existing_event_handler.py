@@ -2,6 +2,10 @@
 
 from otp_bridge import OtpBridge
 from otp_bridge.config import load_route, load_settings
+from otp_bridge.env import load_env_file
+
+
+load_env_file()
 
 
 bridge = OtpBridge()  # MUST be shared by the receiver and the download worker.

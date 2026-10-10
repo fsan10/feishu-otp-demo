@@ -2,17 +2,81 @@
   "chat_id": "oc_REPLACE_WITH_SMS_GROUP_ID",
   "poll_interval_seconds": 3,
   "trusted_senders": [
-    {"id_type": "app_id", "id": "REPLACE_WITH_HISTORY_SENDER_ID"},
-    {"id_type": "open_id", "id": "REPLACE_WITH_EVENT_SENDER_OPEN_ID"}
+    {
+      "id_type": "app_id",
+      "id": "REPLACE_WITH_HISTORY_SENDER_ID"
+    },
+    {
+      "id_type": "open_id",
+      "id": "REPLACE_WITH_EVENT_SENDER_OPEN_ID"
+    }
   ],
   "routes": {
     "test_sms": {
-      "required_keywords": ["OTP_BRIDGE_TEST", "demo-account-8888"],
+      "required_keywords": [
+        "OTP_BRIDGE_TEST",
+        "demo-account-8888"
+      ],
       "max_age_seconds": 120,
       "timeout_seconds": 120
     },
     "douyin_shop_b": {
-      "required_keywords": ["抖音", "旗舰店 B", "138****8888", "报表导出"],
+      "required_keywords": [
+        "抖音",
+        "旗舰店 B",
+        "138****8888",
+        "报表导出"
+      ],
+      "max_age_seconds": 120,
+      "timeout_seconds": 120
+    },
+    "jd_archive_password": {
+      "required_keywords": [
+        "【京东】",
+        "以taskid-",
+        "开头的加密导出文件",
+        "密码"
+      ],
+      "otp_regex": "密码\\s*(?:[（(]\\s*区分大小写\\s*[）)]\\s*)?\\s*(?:(?:是|为)\\s*)?[:：]?\\s*(?P<code>[A-Za-z0-9]{4,8})(?![A-Za-z0-9_-])",
+      "max_age_seconds": 120,
+      "timeout_seconds": 120
+    },
+    "kuaishou_export_otp": {
+      "required_keywords": [
+        "【快手小店】",
+        "验证码",
+        "正申请导出订单"
+      ],
+      "otp_regex": "验证码\\s*(?:(?:是|为)\\s*)?[:：]?\\s*(?P<code>[A-Za-z0-9]{4,8})(?![A-Za-z0-9_-])",
+      "max_age_seconds": 120,
+      "timeout_seconds": 120
+    },
+    "kuaishou_extract_code": {
+      "required_keywords": [
+        "【快手小店】",
+        "提取码",
+        "正申请文件提取码"
+      ],
+      "otp_regex": "提取码\\s*(?:(?:是|为)\\s*)?[:：]?\\s*(?P<code>[A-Za-z0-9]{4,8})(?![A-Za-z0-9_-])",
+      "max_age_seconds": 120,
+      "timeout_seconds": 120
+    },
+    "douyin_order_otp": {
+      "required_keywords": [
+        "【抖店】",
+        "验证码"
+      ],
+      "otp_regex": "验证码\\s*(?:(?:是|为)\\s*)?[:：]?\\s*(?P<code>[A-Za-z0-9]{4,8})(?![A-Za-z0-9_-])",
+      "max_age_seconds": 120,
+      "timeout_seconds": 120
+    },
+    "douyin_archive_password": {
+      "required_keywords": [
+        "【抖音商城】",
+        "订单导出文件已加密",
+        "解压密码"
+      ],
+      "otp_regex": "解压密码\\s*(?:(?:是|为)\\s*)?[:：]?\\s*(?P<code>[A-Za-z0-9]{4,8})(?![A-Za-z0-9_-])",
       "max_age_seconds": 120,
       "timeout_seconds": 120
     }

@@ -12,6 +12,7 @@ import urllib.request
 from typing import Any, Callable
 
 from .core import OtpBridge, OtpResult, Ticket
+from .env import load_env_file
 
 
 class FeishuError(RuntimeError):
@@ -55,6 +56,7 @@ class FeishuClient:
 
     @classmethod
     def from_env(cls) -> FeishuClient:
+        load_env_file()
         return cls(os.environ.get("FEISHU_APP_ID", ""), os.environ.get("FEISHU_APP_SECRET", ""))
 
     def _call(self, method: str, path: str, *, body: dict | None = None,

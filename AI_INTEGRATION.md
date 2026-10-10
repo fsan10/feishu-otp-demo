@@ -79,7 +79,7 @@
 
 `OtpResult.code` 是要传给现有提交逻辑的字符串，其 repr 会隐藏验证码。其他字段包括 `ticket_id`、`route_id`、`message_id`、`created_ms`，可用于脱敏后的审计。一次 ticket 只能消费一次；二次消费会抛异常。
 
-`Route.required_keywords` 的关系是 **AND**，所有字符串都必须出现在转发消息正文里。它不是正则，也不做大模型推断。`otp_regex` 需包含命名组 `(?P<code>...)`，输出仅允许 4～8 位数字；一条消息包含不同验证码时不接受。字母数字混合码需要明确扩展校验并增加测试。
+`Route.required_keywords` 的关系是 **AND**，所有字符串都必须出现在转发消息正文里。它不是正则，也不做大模型推断。`otp_regex` 需包含命名组 `(?P<code>...)`，输出允许 4～8 位 ASCII 英文字母/数字，保留大小写与前导零；一条消息包含不同匹配码时不接受。真实平台的五类规则、手机端匹配与京东 taskid 绑定见 [PLATFORM_SMS.md](docs/PLATFORM_SMS.md)。
 
 事件入口发送者通常是 `sender_type="bot"`，来源身份在 `event.sender.sender_id.open_id`。历史入口对应的是 `sender_type="app"`，来源身份在 `sender.id`、`sender.id_type`。两个入口不要机械地共用同一个 ID 字符串。
 

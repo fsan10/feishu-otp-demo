@@ -39,6 +39,7 @@ def main() -> int:
             item.add_argument("--minutes", type=int, default=10)
         else:
             item.add_argument("--route", required=True)
+            item.add_argument("--task-id", help="JD export task ID, e.g. taskid-123; only for jd_archive_password")
             item.add_argument("--show-code", action="store_true", help="explicitly print code to stdout")
     args = parser.parse_args()
     try:
@@ -69,7 +70,7 @@ def main() -> int:
                 run_websocket(inspect_event)
             return 0
         bridge = OtpBridge()
-        ticket = bridge.arm(load_route(settings, args.route))
+        ticket = bridge.arm(load_route(settings, args.route, task_id=args.task_id))
         if args.transport == "poll":
             client = FeishuClient.from_env()
             # Credential/permission preflight before asking for a live test SMS.

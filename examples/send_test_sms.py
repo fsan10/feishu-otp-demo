@@ -13,6 +13,14 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from otp_bridge.env import load_env_file
 
 
 TEST_TEXT = "OTP_BRIDGE_TEST\ndemo-account-8888\n验证码：123456（仅测试，非真实平台验证码）"
@@ -31,6 +39,7 @@ def make_payload(secret="", timestamp=None):
 
 
 def main():
+    load_env_file()
     url = os.getenv("FEISHU_SMS_WEBHOOK_URL", "")
     parsed = urllib.parse.urlparse(url)
     if parsed.scheme != "https" or parsed.netloc != "open.feishu.cn" or not parsed.path.startswith("/open-apis/bot/v2/hook/"):

@@ -4,6 +4,8 @@ import json
 import os
 from typing import Callable
 
+from .env import load_env_file
+
 
 def build_handler(callback: Callable[[dict], None]):
     try:
@@ -21,6 +23,7 @@ def build_handler(callback: Callable[[dict], None]):
 
 
 def run_websocket(callback: Callable[[dict], None]) -> None:
+    load_env_file()
     handler = build_handler(callback)
     import lark_oapi as lark
     app_id, secret = os.getenv("FEISHU_APP_ID", ""), os.getenv("FEISHU_APP_SECRET", "")

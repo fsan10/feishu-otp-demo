@@ -40,21 +40,28 @@ Copy-Item config.example.json config.json
 
 将 `chat_id` 改成实际群 ID，例如 `oc_...`。群名称或群邀请链接不能代替 ID。可从已有机器人收到的人类消息事件的 `message.chat_id`、项目配置或官方 API 调试台获得。
 
-在运行接收器的终端设置环境变量。下面都是占位值：
+在项目根目录创建本地 `.env` 文件。程序会自动读取它；`.env` 已被 Git 忽略。下面都是占位值：
 
 ```powershell
-$env:FEISHU_APP_ID = "cli_你的接收应用ID"
-$env:FEISHU_APP_SECRET = "你的接收应用Secret"
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+notepad .env
 ```
 
-Linux / macOS：
+在文件中填写接收应用凭据：
 
-```bash
-export FEISHU_APP_ID='cli_你的接收应用ID'
-export FEISHU_APP_SECRET='你的接收应用Secret'
+```dotenv
+FEISHU_APP_ID=cli_你的接收应用ID
+FEISHU_APP_SECRET=你的接收应用Secret
 ```
 
-本例只从进程环境读取秘密，不自动读取 `.env`。如果现有项目已有 dotenv、Docker secret 或其他秘密管理机制，继续使用现有机制。
+运行 `inspect`、`wait` 或示例脚本时，程序会加载 `.env` 中支持的变量。已经由当前进程设置的同名环境变量优先；不要把真实凭据写入 `config.json` 或提交到 Git。
+
+要运行发送假短信的示例，再填写原短信群机器人的 Webhook；只有机器人启用了签名校验时才填写 Secret：
+
+```dotenv
+FEISHU_SMS_WEBHOOK_URL=https://open.feishu.cn/open-apis/bot/v2/hook/你的Webhook
+FEISHU_SMS_WEBHOOK_SECRET=你的签名Secret
+```
 
 ## 4. 获取短信发送方身份
 
@@ -137,6 +144,8 @@ demo-account-8888
 这个测试不会调用真实平台导出接口。要证明**手机短信转发链路**也正常，还需要执行下一步。
 
 ## 6. 接入真实短信与报表任务
+
+京东、快手、抖店的五类真实短信已提供正式路由和手机正则，按 [PLATFORM_SMS.md](PLATFORM_SMS.md) 配置即可；以下 `douyin_shop_b` 是带虚构账号标记的旧演示路由。
 
 在已知可区分账号的前提下，修改 `douyin_shop_b.required_keywords`，使它们确实出现在短信正文或可信转发模板里。示例里的平台、店铺和掩码手机号是演示字段，不保证你的转发器默认带这些字段。
 

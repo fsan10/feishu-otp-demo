@@ -12,8 +12,9 @@ from typing import Any, Callable
 
 
 DEFAULT_OTP_REGEX = (
-    r"(?:验证码|校验码|动态码|verification\s*code|\bOTP\b)"
-    r"\s*(?:是|为|[:：])?\s*(?P<code>[0-9]{4,8})(?![0-9])"
+    r"(?:验证码|校验码|动态码|提取码|解压密码|密码|verification\s*code|\bOTP\b)"
+    r"\s*(?:[（(]\s*区分大小写\s*[）)]\s*)?"
+    r"(?:(?:是|为)\s*)?[:：]?\s*(?P<code>[A-Za-z0-9]{4,8})(?![A-Za-z0-9_-])"
 )
 
 
@@ -167,10 +168,11 @@ def normalize_event(payload: dict) -> Message | None:
 
 
 def extract_code(text: str, regex: str) -> str | None:
+    """Return one distinct ASCII token, preserving case and leading zeroes."""
     codes = {
         match.group("code")
         for match in re.finditer(regex, text, re.IGNORECASE)
-        if match.group("code") and re.fullmatch(r"[0-9]{4,8}", match.group("code"))
+        if match.group("code") and re.fullmatch(r"[A-Za-z0-9]{4,8}", match.group("code"))
     }
     return next(iter(codes)) if len(codes) == 1 else None
 

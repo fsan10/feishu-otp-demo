@@ -4,10 +4,10 @@ from otp_bridge import FeishuClient, OtpBridge, PollingSource
 from otp_bridge.config import load_route, load_settings
 
 
-def download_report(trigger_sms, submit_code, route_id="douyin_shop_b"):
+def download_report(trigger_sms, submit_code, route_id="douyin_order_otp", *, task_id=None):
     """Callbacks are your existing platform code, e.g. Playwright or requests."""
     settings = load_settings("config.json")
-    route = load_route(settings, route_id)
+    route = load_route(settings, route_id, task_id=task_id)
     bridge = OtpBridge()  # Production: inject the process-wide singleton instead.
     client = FeishuClient.from_env()
     # Preflight must happen before the platform side effect, not after sending SMS.
